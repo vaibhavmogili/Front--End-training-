@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modern Registration Form Validation</title>
+    <style>
+        /* Page background and centering */
+        body {
+            background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Form container styling */
+        #registrationForm {
+            background: #fff;
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(44, 62, 80, 0.2);
+            width: 350px;
+            max-width: 90vw;
+        }
+
+        /* Headings */
+        #registrationForm h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2980b9;
+            letter-spacing: 1px;
+        }
+
+        /* Label and input styling */
+        label {
+            display: block;
+            margin-bottom: 0.7rem;
+            color: #34495e;
+            font-size: 1rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.7rem;
+            margin-top: 0.3rem;
+            margin-bottom: 0.5rem;
+            border: 1.5px solid #b2bec3;
+            border-radius: 7px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: #2980b9;
+            outline: none;
+            background: #eaf6fb;
+        }
+
+        input:valid {
+            border-color: #27ae60;
+        }
+
+        input:invalid {
+            border-color: #e74c3c;
+        }
+
+        /* Button styling */
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(90deg, #2980b9 0%, #6dd5fa 100%);
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+            margin-top: 0.8rem;
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #6dd5fa 0%, #2980b9 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        /* Error and success message styling */
+        .error {
+            color: #e74c3c;
+            font-size: 0.95em;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+        .success {
+            color: #27ae60;
+            font-size: 1.05em;
+            margin-top: 1rem;
+            text-align: center;
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            #registrationForm {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form id="registrationForm" novalidate>
+        <h2>Register</h2>
+        <label>
+            Name:
+            <input type="text" id="name" name="name" required minlength="3" placeholder="Enter your name">
+        </label>
+        <span id="nameError" class="error"></span>
+
+        <label>
+            Email:
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </label>
+        <span id="emailError" class="error"></span>
+
+        <label>
+            Password:
+            <input type="password" id="password" name="password" required minlength="6" placeholder="Create a password">
+        </label>
+        <span id="passwordError" class="error"></span>
+
+        <button type="submit">Register</button>
+        <span id="formSuccess" class="success"></span>
+    </form>
+
+    <script>
+        // Get form and error elements
+        const form = document.getElementById('registrationForm');
+        const name = document.getElementById('name');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const formSuccess = document.getElementById('formSuccess');
+
+        form.addEventListener('submit', function(event) {
+            let valid = true;
+            formSuccess.textContent = "";
+
+            // Name validation
+            if (name.value.trim().length < 3) {
+                nameError.textContent = "Name must be at least 3 characters.";
+                valid = false;
+            } else {
+                nameError.textContent = "";
+            }
+
+            // Email validation
+            if (!email.checkValidity()) {
+                emailError.textContent = "Enter a valid email address.";
+                valid = false;
+            } else {
+                emailError.textContent = "";
+            }
+
+            // Password validation
+            if (password.value.length < 6) {
+                passwordError.textContent = "Password must be at least 6 characters.";
+                valid = false;
+            } else {
+                passwordError.textContent = "";
+            }
+
+            // Prevent form submission if not valid
+            if (!valid) {
+                event.preventDefault();
+            } else {
+                event.preventDefault(); // For demo purposes, prevent actual submission
+                formSuccess.textContent = "Registration successful!";
+                // Optionally, clear the form fields here
+            }
+        });
+    </script>
+</body>
+</html>
